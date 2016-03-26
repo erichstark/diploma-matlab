@@ -2,7 +2,7 @@
 clc
 
 % add required libraries
-addpath('/Users/Erich/Desktop/DP/jsonlab-1.2');
+addpath('/Users/Erich/Desktop/DP/Matlab/diploma-matlab/libs/jsonlab-1.2');
 
 model = 'Sikmy_vrh_2';
 
@@ -43,7 +43,7 @@ while 1
    
    % delete first column - time duplicity
    ScopeDataTime(:,1)=[];
-   TimeDataSent = setdiff(ScopeDataTime, TimeDataBefore);
+   TimeDataSent = setdiff(ScopeDataTime, TimeDataBefore, 'stable');
    TimeDataBefore = ScopeDataTime;
    
    n = length(TimeDataSent) ; % known final size of array
@@ -56,7 +56,7 @@ while 1
    % delete first column - time duplicity
    ScopeDataVY(:,1)=[];
    
-   vyDataSent = setdiff(ScopeDataVY, vyDataBefore);
+   vyDataSent = setdiff(ScopeDataVY, vyDataBefore, 'stable');
    vyDataBefore = ScopeDataVY;
    
    m = length(vyDataSent) ; % known final size of array
@@ -68,8 +68,10 @@ while 1
    % delete first column - time duplicity
    ScopeDataY(:,1)=[];
    
-   yDataSent = setdiff(ScopeDataY, yDataBefore);
+   % stable is key for difference without sorting! http://www.mathworks.com/help/matlab/ref/setdiff.html#btcnv2b-13
+   yDataSent = setdiff(ScopeDataY, yDataBefore, 'stable')
    yDataBefore = ScopeDataY;
+   
    
    k = length(yDataSent); % known final size of array
    C = zeros(1,k); % pre-allocation
@@ -80,7 +82,7 @@ while 1
    % delete first column - time duplicity
    ScopeDataX(:,1)=[];
    
-   xDataSent = setdiff(ScopeDataX, xDataBefore);
+   xDataSent = setdiff(ScopeDataX, xDataBefore, 'stable');
    xDataBefore = ScopeDataX;
    
    j = length(xDataSent); % known final size of array
@@ -91,9 +93,6 @@ while 1
    
    json = savejson('result', struct('status', 'running', 'sessionId', 'xxx72', 'data', struct('time', A, 'vy', B, 'y', C, 'x',D)));
    response = webwrite(url,json,options);
-   
-   % zistenie velkosti pola (aby som videl, ze kazdy cyklus meni velkost)
-   % size(ScopeDataY);
    
    % Ked sa ukonci simulacia, ukoncit while
    if strcmp(get_param(model,'SimulationStatus'), 'running') == 0
