@@ -1,8 +1,9 @@
-% clear command window matlab
+% clear command window matlab and workspace
 clc
+clear
 
 % add required libraries
-addpath('/Users/Erich/Desktop/DP/Matlab/diploma-matlab/libs/jsonlab-1.2');
+addpath('libs/jsonlab-1.2');
 
 model = 'Sikmy_vrh_2';
 
@@ -14,14 +15,11 @@ load_system(model);
 fprintf('%s%s.\n', 'Start simulation of model ', model);
 set_param(model,'SimulationCommand','Start');
 
-%data = webread('http://localhost:8081/listUsers')
-
 api = 'http://localhost:3000/';
 url = [api 'test'];
+
+% TODO preskumat moznosti options
 options = weboptions('MediaType','application/json');
-%data = webread(url,options)
-%data = struct('api_key','key','field1','field');
-%response = webwrite(url,data,options);
 
 TimeDataSent = [];
 TimeDataBefore = [];
@@ -59,7 +57,7 @@ while 1
    vyDataSent = setdiff(ScopeDataVY, vyDataBefore, 'stable');
    vyDataBefore = ScopeDataVY;
    
-   m = length(vyDataSent) ; % known final size of array
+   m = length(vyDataSent); % known final size of array
    B = zeros(1,m) ; % pre-allocation
    for i=1:m,
        B(i) = round(vyDataSent(i), 2); % a scalar
@@ -69,14 +67,14 @@ while 1
    ScopeDataY(:,1)=[];
    
    % stable is key for difference without sorting! http://www.mathworks.com/help/matlab/ref/setdiff.html#btcnv2b-13
-   yDataSent = setdiff(ScopeDataY, yDataBefore, 'stable')
+   yDataSent = setdiff(ScopeDataY, yDataBefore, 'stable');
    yDataBefore = ScopeDataY;
    
    
    k = length(yDataSent); % known final size of array
    C = zeros(1,k); % pre-allocation
    for i=1:k,
-       C(i) = round(yDataSent(i), 2); % a scalar
+       C(i) = round(yDataSent(i), 2); % a scalar 
    end
    
    % delete first column - time duplicity
