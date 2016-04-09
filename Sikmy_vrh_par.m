@@ -1,10 +1,8 @@
-function [] = Sikmy_vrh_par(v0, alfa_deg, loggedUser)
-
-    %runBy = loggedUser
+function [] = Sikmy_vrh_par(v0, alfa_deg, runBy)
     % Parametre pre model so sikmym vrhom
     %v0 - [m/s] pociatocna rychlost v smere hodu
     %alfa_deg - [deg] uhol vrhu v stupnoch
-
+    
     % [m/s^2] gravitacne zrychlenie
     g = 9.81;
     if alfa_deg > 90; alfa_deg=90; end;
