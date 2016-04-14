@@ -93,5 +93,5 @@ while 1
        break
    end
 
-   pause(0.5);
+   pause(0.1);
 end
