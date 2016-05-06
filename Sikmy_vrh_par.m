@@ -1,4 +1,4 @@
-function [] = Sikmy_vrh_par(v0, alfa_deg, runBy)
+function [] = Sikmy_vrh_par(v0, alfa_deg, userFromWeb)
     % Parametre pre model so sikmym vrhom
     %v0 - [m/s] pociatocna rychlost v smere hodu
     %alfa_deg - [deg] uhol vrhu v stupnoch
