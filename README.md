@@ -1,4 +1,4 @@
 # starklab-matlab
 
 
-version 0.2.1 as nodejs web
+version 0.3.0 as nodejs web
