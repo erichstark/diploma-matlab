@@ -1,7 +1,7 @@
 function [] = Sikmy_vrh_par(v0, alfa_deg, userFromWeb)
     % Parametre pre model so sikmym vrhom
-    %v0 - [m/s] pociatocna rychlost v smere hodu
-    %alfa_deg - [deg] uhol vrhu v stupnoch
+    % v0 - [m/s] pociatocna rychlost v smere hodu
+    % alfa_deg - [deg] uhol vrhu v stupnoch
     
     % [m/s^2] gravitacne zrychlenie
     g = 9.81;
@@ -26,6 +26,5 @@ function [] = Sikmy_vrh_par(v0, alfa_deg, userFromWeb)
         assignin('base', A{i}, eval(A{i}));
     end
 end
-
 
 

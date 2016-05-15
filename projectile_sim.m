@@ -67,20 +67,26 @@ while 1
    
    % Round data to 2 decimal places
    for i=1:n
+       % sometimes yDataSent size is lover then size of other arrays
+       if (i > size(yDataSent))
+           yFinal(i) = 0;
+       else
+           yFinal(i) = round(yDataSent(i), 2);
+       end
+       
        timeFinal(i) = round(timeDataSent(i), 2);
        vyFinal(i) = round(vyDataSent(i), 2);
-       yFinal(i) = round(yDataSent(i), 2);
        xFinal(i) = round(xDataSent(i), 2);
    end
    
    % Create json structure using jsonlab library and send to webservice
-   json = savejson('result', struct('user', userFromWeb, 'status', 'running', 'sessionId', 'xxx72', 'data', struct('time', timeFinal, 'vy', vyFinal, 'y', yFinal, 'x',xFinal)));
+   json = savejson('result', struct('user', userFromWeb, 'status', 'running', 'data', struct('time', timeFinal, 'vy', vyFinal, 'y', yFinal, 'x',xFinal)));
    response = webwrite(url, json, options);
    
    % If simulation ends break the while loop
    if strcmp(get_param(model,'SimulationStatus'), 'running') == 0
        fprintf('%s\n', 'End of simulation.');
-       json = savejson('result', struct('user', userFromWeb, 'status', 'stopped', 'sessionId', 'xxx72', 'data', []));
+       json = savejson('result', struct('user', userFromWeb, 'status', 'stopped', 'data', []));
        response = webwrite(url,json,options);
        break
    end
